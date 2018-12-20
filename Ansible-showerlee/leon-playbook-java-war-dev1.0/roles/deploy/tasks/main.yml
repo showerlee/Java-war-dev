@@ -1,0 +1,27 @@
+# - name: Parse php version
+#   local_action: 'shell python {{ role_path }}/files/get_php_version.py {{site_url}}'
+#   register: php_version_result
+
+- name: Get ansible version
+  debug: msg="{{ lookup('pipe', 'ansible-playbook --version') }}"
+
+- name: Get current shell
+  debug: msg="{{ lookup('env', 'SHELL') }}"
+
+# - debug : msg="{{php_version_result}}"
+
+# - name: Get php version
+#   debug: msg="{{php_version_result.stdout}}"
+
+- name: Backup current WAR home
+  shell: 
+    'cp -a {{deploy_to}} {{backup_to}}'
+
+- name: "Copy source {{war_path}}/{{project}}.war to destination {{deploy_to}}/{{project}}.war when dev env" 
+  copy:
+    src: "{{war_path}}/{{project}}.war"
+    dest: "{{deploy_to}}/{{project}}.war"
+  when: project == "Java-war-dev"
+
+
+

@@ -20,7 +20,7 @@ pipeline {
             steps{
                 echo "INFO:Checkout src from gitlab."
                 dir ("${env.WORKSPACE}/Java-war-dev") {
-                    git branch: 'deploy', url: 'git@git.showerlee.com:showerlee/Java-war-dev.git'
+                    git branch: 'deploy', url: 'https://github.com/showerlee/Java-war-dev.git'
                 }
             }
         }
@@ -94,16 +94,7 @@ pipeline {
                 """
                 echo "INFO:Committed ${env.APPNAME} version ${env.SNAP_VER} to repo"
             }
-        }
-        
-        stage("Pull deploy code"){
-            steps{
-                echo "INFO:Pull ansible playbook"
-                dir ("${env.WORKSPACE}/Ansible-showerlee") {
-                    git branch: 'master', url: 'git@git.showerlee.com:showerlee/Ansible-showerlee.git'
-                }
-            }
-        }
+        }        
         
         stage("Deploy prerequsite"){
             steps{

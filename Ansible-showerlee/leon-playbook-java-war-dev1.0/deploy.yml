@@ -1,0 +1,11 @@
+- hosts: "{{project}}"
+  gather_facts: true
+  vars:
+    backup_to: "{{deploy_to}}_{{ansible_date_time.epoch}}"
+    site_url: "http://tomcat.showerlee.com"
+  roles:
+    - deploy
+      
+
+     #- debug:
+     #    msg="{{backup_to}}"

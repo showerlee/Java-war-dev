@@ -1,0 +1,5 @@
+[Java-war-dev]
+127.0.0.1:52641
+
+[Java-war-dev:vars]
+deploy_to=/var/lib/tomcat/webapps
