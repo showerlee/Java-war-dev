@@ -18,7 +18,7 @@ Github ===> Git repo
 
 Jenkins ===> CI/CD manager
 
-Maven ===> Java Build tool(Setting the Nexus repo credential in "${maven_home}conf/setting.xml")
+Maven ===> Java Build tool(Setting the Nexus repo credential in "${maven_home}/conf/setting.xml")
 
 Nexus ===> Package Repository Manager
 
