@@ -4,8 +4,7 @@ pipeline {
     agent{node {label 'master'}}
     
     environment {
-        PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/etc/apache-maven/bin"
-        JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.121-0.b13.el7_3.x86_64/jre/"
+        PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/Users/zhenyu.li/Workspace/opt/apache-maven-3.6.0/bin"
     }
     
     parameters {
@@ -16,11 +15,11 @@ pipeline {
     }
     
     stages {
-        stage("Checkout src from gitlab"){
+        stage("Checkout code from github"){
             steps{
-                echo "INFO:Checkout src from gitlab."
+                echo "INFO:Checkout code from gitlab."
                 dir ("${env.WORKSPACE}/Java-war-dev") {
-                    git branch: 'deploy', url: 'https://github.com/showerlee/Java-war-dev.git'
+                    git branch: 'deploy', credentialsId: 'Github-credential', url: 'https://github.com/showerlee/Java-war-dev.git'
                 }
             }
         }
@@ -31,16 +30,6 @@ pipeline {
                 echo "INFO:Maven compilation"
                 cd ${env.WORKSPACE}/Java-war-dev
                 mvn compile
-                """
-            }
-        }
-        
-        stage("Unit test"){
-            steps{
-                sh """
-                echo "INFO:Maven testing"
-                cd ${env.WORKSPACE}/Java-war-dev
-                mvn test
                 """
             }
         }
