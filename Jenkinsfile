@@ -4,7 +4,7 @@ pipeline {
     agent{node {label 'master'}}
     
     environment {
-        PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/Users/zhenyu.li/Workspace/opt/apache-maven-3.6.0/bin"
+        PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/data/opt/apache-maven-3.6.0/bin"
     }
     
     parameters {
@@ -104,7 +104,7 @@ pipeline {
             steps{
                 //input "Are you ready?"
                 echo "INFO:Start deploy war to the destination server"
-                dir('./Ansible-showerlee/leon-playbook-java-war-dev1.0') {
+                dir('./ansible/leon-playbook-java-war-dev1.0') {
                 sh """
                 set +x
                 source /home/deploy/.py3env/bin/activate
