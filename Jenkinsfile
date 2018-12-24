@@ -4,7 +4,7 @@ pipeline {
     agent{node {label 'master'}}
     
     environment {
-        PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/data/opt/apache-maven-3.6.0/bin"
+        PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/data/apache-maven-3.6.0/bin"
     }
     
     parameters {
