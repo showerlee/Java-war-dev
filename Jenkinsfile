@@ -106,7 +106,7 @@ pipeline {
             steps{
                 //input "Are you ready?"
                 echo "INFO:Start deploy war to the destination server"
-                dir('${env.WORKSPACE}/Java-war-dev/ansible/leon-playbook-java-war-dev1.0') {
+                dir("${env.WORKSPACE}/Java-war-dev/ansible/leon-playbook-java-war-dev1.0") {
                 sh """
                 set +x
                 source /home/deploy/.py3env/bin/activate
