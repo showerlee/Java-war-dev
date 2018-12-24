@@ -75,7 +75,7 @@ pipeline {
                 echo "INFO:Updated ${env.APPNAME} version to ${env.SNAP_VER}"
                 
                 // Commit the version
-                withCredentials([usernamePassword(credentialsId: 'Github-credential' usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'Github-credential', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
                     sh """
                     cd ${env.WORKSPACE}/Java-war-dev
                     git add pom.xml promote.properties
