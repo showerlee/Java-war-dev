@@ -108,11 +108,9 @@ pipeline {
                 echo "INFO:Start deploy war to the destination server"
                 dir ("${env.WORKSPACE}/Java-war-dev/ansible/leon-playbook-java-war-dev1.0") {
                 sh """
-                # set +x
                 source /home/deploy/.py3env/bin/activate
                 source /home/deploy/.py3env/ansible/hacking/env-setup -q
                 ansible-playbook -i inventory/${env.deploy_env} ./deploy.yml -e project=Java-war-dev -e war_path="${env.WORKSPACE}/Java-war-dev/target"
-                # set -x
                 """
                 echo "INFO:Anisble Deployment finished"
                 }
