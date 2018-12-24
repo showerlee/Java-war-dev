@@ -75,12 +75,14 @@ pipeline {
                 echo "INFO:Updated ${env.APPNAME} version to ${env.SNAP_VER}"
                 
                 // Commit the version
-                sh """
-                cd ${env.WORKSPACE}/Java-war-dev
-                git add pom.xml promote.properties
-                git commit -m"update version to SNAPSHOT-${env.SNAP_VER}"
-                git push origin master
-                """
+                withCredentials([usernamePassword(credentialsId: 'Github-credential' usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                    sh """
+                    cd ${env.WORKSPACE}/Java-war-dev
+                    git add pom.xml promote.properties
+                    git commit -m"update version to SNAPSHOT-${env.SNAP_VER}"
+                    git push https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@github.com/showerlee/Java-war-dev.git master
+                    """
+                }
                 echo "INFO:Committed ${env.APPNAME} version ${env.SNAP_VER} to repo"
             }
         }        
