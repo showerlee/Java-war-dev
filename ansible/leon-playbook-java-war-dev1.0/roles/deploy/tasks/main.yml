@@ -2,6 +2,9 @@
 #   local_action: 'shell python {{ role_path }}/files/get_php_version.py {{site_url}}'
 #   register: php_version_result
 
+- name: Install tomcat
+  yum: pkg=tomcat state=latest
+
 - name: Get ansible version
   debug: msg="{{ lookup('pipe', 'ansible-playbook --version') }}"
 
@@ -22,6 +25,9 @@
     src: "{{war_path}}/{{project}}.war"
     dest: "{{deploy_to}}/{{project}}.war"
   when: project == "Java-war-dev"
+
+- name: start tomcat
+  service: name=tomcat state=restarted
 
 
 
