@@ -87,7 +87,7 @@ pipeline {
             }
         }        
         
-        stage("Deploy prerequsite"){
+        stage("Ansible deployment"){
             steps{
                 echo "INFO:Checking deployment env"
                 sh """
