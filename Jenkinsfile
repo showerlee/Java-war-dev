@@ -109,7 +109,7 @@ pipeline {
                 dir ("${env.WORKSPACE}/Java-war-dev/ansible/leon-playbook-java-war-dev1.0") {
                 sh """
                 source /home/deploy/.py3env/bin/activate
-                source /home/deploy/.py3env/ansible/hacking/env-setup -q
+                . /home/deploy/.py3env/ansible/hacking/env-setup -q
                 ansible-playbook -i inventory/${env.deploy_env} ./deploy.yml -e project=Java-war-dev -e war_path="${env.WORKSPACE}/Java-war-dev/target"
                 """
                 echo "INFO:Anisble Deployment finished"
