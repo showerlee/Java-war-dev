@@ -106,11 +106,11 @@ pipeline {
             steps{
                 //input "Are you ready?"
                 echo "INFO:Start deploy war to the destination server"
-                dir("${env.WORKSPACE}/Java-war-dev/ansible/leon-playbook-java-war-dev1.0") {
                 sh """
                 set +x
+                cd ${env.WORKSPACE}/Java-war-dev/ansible/leon-playbook-java-war-dev1.0
                 source /home/deploy/.py3env/bin/activate
-                source /home/deploy/.py3env/ansible/hacking/env-setup -q
+                . /home/deploy/.py3env/ansible/hacking/env-setup -q
                 ansible-playbook -i inventory/$deploy_env ./deploy.yml -e project=Java-war-dev -e war_path="${env.WORKSPACE}/Java-war-dev/target"
                 set -x
                 """
