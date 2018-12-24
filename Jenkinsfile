@@ -96,25 +96,14 @@ pipeline {
                 . /home/deploy/.py3env/ansible/hacking/env-setup -q
                 ansible --version
                 python --version
-                set -x
-                """
                 echo "INFO:Python and Ansibe Env is ready to go"
-            }
-        }
-        
-        stage("Ansible Deployment"){
-            steps{
-                //input "Are you ready?"
                 echo "INFO:Start deploy war to the destination server"
-                sh """
-                set +x
                 cd ${env.WORKSPACE}/Java-war-dev/ansible/leon-playbook-java-war-dev1.0
-                source /home/deploy/.py3env/bin/activate
-                . /home/deploy/.py3env/ansible/hacking/env-setup -q
                 ansible-playbook -i inventory/$deploy_env ./deploy.yml -e project=Java-war-dev -e war_path="${env.WORKSPACE}/Java-war-dev/target"
                 set -x
-                """
                 echo "INFO:Anisble Deployment finished"
+                """
+                
             }
         }
 
