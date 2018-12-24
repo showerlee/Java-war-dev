@@ -31,7 +31,7 @@
     <snapshotRepository>
 	    <id>releases</id>
 	    <name>Internal Releases</name>
-	    <url>http://3.112.18.156:8081/repository/Java-war-tomcat/</url> 
+	    <url>http://18.182.42.167:8081/repository/Java-war-tomcat/</url> 
     </snapshotRepository>
   </distributionManagement>
 
