@@ -84,7 +84,6 @@ pipeline {
                     """
                 }
                 echo "INFO:Committed ${env.APPNAME} version ${env.SNAP_VER} to repo"
-                input("Start deploy to ${deploy_env} ?")
             }
         }        
         
