@@ -1,5 +1,5 @@
 [Java-war-dev]
-18.182.42.167 ansible_user=root
+13.114.101.229 ansible_user=root
 
 [Java-war-dev:vars]
 deploy_to=/var/lib/tomcat/webapps
