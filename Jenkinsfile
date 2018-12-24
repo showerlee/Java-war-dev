@@ -79,7 +79,7 @@ pipeline {
                 cd ${env.WORKSPACE}/Java-war-dev
                 git add pom.xml promote.properties
                 git commit -m"update version to SNAPSHOT-${env.SNAP_VER}"
-                git push origin deploy
+                git push origin master
                 """
                 echo "INFO:Committed ${env.APPNAME} version ${env.SNAP_VER} to repo"
             }
