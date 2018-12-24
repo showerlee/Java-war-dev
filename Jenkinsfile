@@ -97,6 +97,7 @@ pipeline {
                 ansible --version
                 python --version
                 echo "INFO:Python and Ansibe Env is ready to go"
+                input("Deploy to ${deploy_env} ?")
                 echo "INFO:Start deploy war to the destination server"
                 cd ${env.WORKSPACE}/Java-war-dev/ansible/leon-playbook-java-war-dev1.0
                 ansible-playbook -i inventory/$deploy_env ./deploy.yml -e project=Java-war-dev -e war_path="${env.WORKSPACE}/Java-war-dev/target"
