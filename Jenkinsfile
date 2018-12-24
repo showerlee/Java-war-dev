@@ -115,7 +115,6 @@ pipeline {
                 set -x
                 """
                 echo "INFO:Anisble Deployment finished"
-                }
             }
         }
 
