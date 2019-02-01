@@ -113,8 +113,8 @@ pipeline {
                 cd ${env.WORKSPACE}/Java-war-dev/ansible/leon-playbook-java-war-dev1.0
                 ansible-playbook -i inventory/$deploy_env ./deploy.yml -e project=Java-war-dev -e war_path="${env.WORKSPACE}/Java-war-dev/target"
                 set -x
-                """
                 echo "INFO:Congratulation, Anisble Deployment has been finished successfully :)"
+                """
             }
         }
 
