@@ -87,9 +87,26 @@ pipeline {
             }
         }
 
+        stage("Deploy prerequsite"){
+            steps{
+                echo 'Checking deployment env'
+                sh """
+                set +x
+                source /home/deploy/.py3env/bin/activate
+                . /home/deploy/.py3env/ansible/hacking/env-setup -q
+                ansible --version
+                python --version
+                set -x
+                
+                """
+                echo 'Python and Ansibe Env is ready to go...'
+                input("Start deploying to ${deploy_env}?")
+            }
+        }
+
         stage("Ansible Deployment"){
             steps{
-                echo 'Start deploying war to the destination server'
+                echo "Start deploying war to the destination server"
                 sh """
                 set +x
                 source /home/deploy/.py3env/bin/activate
@@ -99,7 +116,7 @@ pipeline {
                 set -x
 
                 """
-                echo 'INFO:Congratulation, Anisble Deployment has been finished successfully :)'
+                echo "INFO:Congratulation, Anisble Deployment has been finished successfully :)"
             }
         }
 
