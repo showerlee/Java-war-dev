@@ -105,7 +105,7 @@ pipeline {
         
         stage("Ansible deployment"){
             steps{
-                echo "INFO:Start deploy war to the destination server"
+                echo "INFO:Start deploying war to the destination server"
                 sh """
                 set +x
                 source /home/deploy/.py3env/bin/activate
@@ -114,7 +114,7 @@ pipeline {
                 ansible-playbook -i inventory/$deploy_env ./deploy.yml -e project=Java-war-dev -e war_path="${env.WORKSPACE}/Java-war-dev/target"
                 set -x
                 """
-                echo "INFO:Congratulation, Anisble Deployment has finished successfully :)"                
+                echo "INFO:Congratulation, Anisble Deployment has been finished successfully :)"                
             }
         }
 
