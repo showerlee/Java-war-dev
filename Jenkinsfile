@@ -92,9 +92,10 @@ pipeline {
                 echo "INFO:Checking deployment env"
                 sh """
                 set +x
-                echo "Disk space:"
+                echo "INFO:Checking Disk space:"
                 df -h
-                echo "RAM space:"
+                echo ""
+                echo "INFO:Checking RAM space:"
                 free -m
                 set -x
                 """
@@ -109,9 +110,12 @@ pipeline {
                 sh """
                 set +x
                 source /home/deploy/.py3env/bin/activate
+                echo "INFO:Checking python version"
                 python --version
                 . /home/deploy/.py3env/ansible/hacking/env-setup -q
+                echo "INFO:Checking ansible version"
                 ansible --version
+                echo "INFO:Start ansible deployment"
                 cd ${env.WORKSPACE}/Java-war-dev/ansible/leon-playbook-java-war-dev1.0
                 ansible-playbook -i inventory/$deploy_env ./deploy.yml -e project=Java-war-dev -e war_path="${env.WORKSPACE}/Java-war-dev/target"              
                 set -x
