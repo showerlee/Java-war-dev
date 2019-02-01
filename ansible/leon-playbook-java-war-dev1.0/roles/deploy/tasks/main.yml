@@ -1,5 +1,5 @@
-- name: Disable system firewall
-  service: name=firewalld state=stopped
+# - name: Disable system firewall
+#   service: name=firewalld state=stopped
 
 - name: Disable SELINX
   selinux: state=disabled
