@@ -9,7 +9,7 @@ pipeline {
     
     parameters {
         choice(
-            choices: 'prod\ndev',
+            choices: 'dev\nprod',
             description: 'choose deploy environment',
             name: 'deploy_env')
     }
