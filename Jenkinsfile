@@ -23,37 +23,7 @@ pipeline {
                 }
             }
         }
-    
-        stage("Mvn compile"){
-            steps{
-                sh """
-                echo "INFO:Maven compilation"
-                cd ${env.WORKSPACE}/Java-war-dev
-                mvn compile
-                """
-            }
-        }
-        
-        stage("Package"){
-            steps{
-                sh """
-                echo "INFO:Maven pachage"
-                cd ${env.WORKSPACE}/Java-war-dev
-                mvn package
-                """
-            }
-        }
-    
-        stage("Upload war to Nexus"){
-            steps{
-                sh """
-                echo "INFO:Upload built war file to Nexus"
-                cd ${env.WORKSPACE}/Java-war-dev
-                mvn deploy
-                """
-            }
-        }
-        
+
         stage("Update version"){
             steps{
                 echo "INFO:Increased maven snapshot version"
@@ -84,9 +54,40 @@ pipeline {
                     """
                 }
                 echo "INFO:Committed ${env.APPNAME} version ${env.SNAP_VER} to repo"
+            }
+        } 
+    
+        stage("Mvn compile"){
+            steps{
+                sh """
+                echo "INFO:Maven compilation"
+                cd ${env.WORKSPACE}/Java-war-dev
+                mvn compile
+                """
+            }
+        }
+        
+        stage("Package"){
+            steps{
+                sh """
+                echo "INFO:Maven pachage"
+                cd ${env.WORKSPACE}/Java-war-dev
+                mvn package
+                """
+            }
+        }
+    
+        stage("Upload war to Nexus"){
+            steps{
+                sh """
+                echo "INFO:Upload built war file to Nexus"
+                cd ${env.WORKSPACE}/Java-war-dev
+                mvn deploy
+                """
                 input("Start deploy to ${deploy_env}?")
             }
-        }        
+        }
+               
         
         stage("Ansible deployment"){
             steps{
