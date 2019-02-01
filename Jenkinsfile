@@ -17,7 +17,7 @@ pipeline {
     stages {
         stage("Checkout code from github"){
             steps{
-                echo "INFO:Checkout code from github."
+                echo "[INFO]:Checkout code from github."
                 dir ("${env.WORKSPACE}/Java-war-dev") {
                     git branch: 'master', credentialsId: 'Github-credential', url: 'https://github.com/showerlee/Java-war-dev.git'
                 }
@@ -26,7 +26,7 @@ pipeline {
 
         stage("VersionSet"){
             steps{
-                echo "INFO:Increased maven snapshot version"
+                echo "[INFO]:Increased maven snapshot version"
                 sh """
                 # POM Version addition. 
                 cd ${env.WORKSPACE}/Java-war-dev
@@ -42,7 +42,7 @@ pipeline {
                     env['APPNAME'] = props['APPNAME'];
                 }
                 
-                echo "INFO:Updated ${env.APPNAME} version to ${env.SNAP_VER}"
+                echo "[INFO]:Updated ${env.APPNAME} version to ${env.SNAP_VER}"
                 
                 // Commit the version
                 withCredentials([usernamePassword(credentialsId: 'Github-credential', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
@@ -53,14 +53,14 @@ pipeline {
                     git push https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@github.com/showerlee/Java-war-dev.git master
                     """
                 }
-                echo "INFO:Committed ${env.APPNAME} version ${env.SNAP_VER} to repo"
+                echo "[INFO]:Committed ${env.APPNAME} version ${env.SNAP_VER} to repo"
             }
         } 
     
         stage("Mvn compile"){
             steps{
                 sh """
-                echo "INFO:Maven compilation"
+                echo "[INFO]:Maven compilation"
                 cd ${env.WORKSPACE}/Java-war-dev
                 mvn compile
                 """
@@ -70,7 +70,7 @@ pipeline {
         stage("Package"){
             steps{
                 sh """
-                echo "INFO:Maven package"
+                echo "[INFO]:Maven package"
                 cd ${env.WORKSPACE}/Java-war-dev
                 mvn package
                 """
@@ -80,7 +80,7 @@ pipeline {
         stage("Upload war to Nexus"){
             steps{
                 sh """
-                echo "INFO:Upload built war file to Nexus"
+                echo "[INFO]:Upload built war file to Nexus"
                 cd ${env.WORKSPACE}/Java-war-dev
                 mvn deploy
                 """
@@ -89,13 +89,13 @@ pipeline {
 
         stage("Env prerequsite"){
             steps{
-                echo "INFO:Checking deployment env"
+                echo "[INFO]:Checking deployment env"
                 sh """
                 set +x
-                echo "INFO:Checking Disk space:"
+                echo "[INFO]:Checking Disk space:"
                 df -h
                 echo ""
-                echo "INFO:Checking RAM space:"
+                echo "[INFO]:Checking RAM space:"
                 free -m
                 set -x
                 """
@@ -106,22 +106,22 @@ pipeline {
 
         stage("Ansible Deployment"){
             steps{
-                echo "INFO:Start deploying war to the destination server"
+                echo "[INFO]:Start deploying war to the destination server"
                 sh """
                 set +x
                 source /home/deploy/.py3env/bin/activate
-                echo "INFO:Checking python version"
+                echo "[INFO]:Checking python version"
                 python --version
                 . /home/deploy/.py3env/ansible/hacking/env-setup -q
-                echo "INFO:Checking ansible version"
+                echo "[INFO]:Checking ansible version"
                 ansible --version
-                echo "INFO:Start ansible deployment"
+                echo "[INFO]:Start ansible deployment"
                 cd ${env.WORKSPACE}/Java-war-dev/ansible/leon-playbook-java-war-dev1.0
                 ansible-playbook -i inventory/$deploy_env ./deploy.yml -e project=Java-war-dev -e war_path="${env.WORKSPACE}/Java-war-dev/target"              
                 set -x
 
                 """
-                echo "INFO:Congratulation, Anisble Deployment has been finished successfully :)"
+                echo "[INFO]:Congratulation, Anisble Deployment has been finished successfully :)"
             }
         }
 
