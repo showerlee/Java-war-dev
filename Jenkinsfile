@@ -99,7 +99,7 @@ pipeline {
                 free -m
                 set -x
                 """
-                echo "Env is ready to go..."
+                echo "[INFO] Env is ready to go..."
                 input("Start deploying to ${deploy_env}?")
             }
         }
