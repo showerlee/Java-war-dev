@@ -101,9 +101,9 @@ pipeline {
                 echo "INFO:Python and Ansibe Env is ready to go"
                 input("Start deploying to ${deploy_env}?")
             }
-        }      
-        
-        stage("Ansible deployment"){
+        }
+
+        stage("Upload war to Nexus"){
             steps{
                 echo "INFO:Start deploying war to the destination server"
                 sh """
@@ -114,7 +114,7 @@ pipeline {
                 ansible-playbook -i inventory/$deploy_env ./deploy.yml -e project=Java-war-dev -e war_path="${env.WORKSPACE}/Java-war-dev/target"
                 set -x
                 """
-                echo "INFO:Congratulation, Anisble Deployment has been finished successfully :)"                
+                echo "INFO:Congratulation, Anisble Deployment has been finished successfully :)"
             }
         }
 
