@@ -89,24 +89,24 @@ pipeline {
 
         stage("Check prerequsite"){
             steps{
-                echo "INFO:Checking deployment env"
                 sh """
+                echo "INFO:Checking deployment env"
                 set +x
                 source /home/deploy/.py3env/bin/activate
                 source /home/deploy/.py3env/ansible/hacking/env-setup -q
                 ansible --version
                 python --version
                 set -x
-                """
                 echo "INFO:Python and Ansibe Env is ready to go"
+                """
                 input("Start deploying to ${deploy_env}?")
             }
         }
 
         stage("Ansible Deployment"){
             steps{
-                echo "INFO:Start deploying war to the destination server"
                 sh """
+                echo "INFO:Start deploying war to the destination server"
                 set +x
                 source /home/deploy/.py3env/bin/activate
                 source /home/deploy/.py3env/ansible/hacking/env-setup -q
