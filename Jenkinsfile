@@ -103,7 +103,7 @@ pipeline {
             }
         }
 
-        stage("Upload war to Nexus"){
+        stage("Ansible Deployment"){
             steps{
                 echo "INFO:Start deploying war to the destination server"
                 sh """
