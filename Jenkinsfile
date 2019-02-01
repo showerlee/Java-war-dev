@@ -89,10 +89,11 @@ pipeline {
 
         stage("Env prerequsite"){
             steps{
-                echo "Checking deployment env"
+                echo "INFO:Checking deployment env"
                 sh """
                 set +x
                 df -h
+                echo ""
                 free -m
                 set -x
                 """
@@ -103,13 +104,11 @@ pipeline {
 
         stage("Ansible Deployment"){
             steps{
-                echo "Start deploying war to the destination server"
+                echo "INFO:Start deploying war to the destination server"
                 sh """
                 set +x
                 source /home/deploy/.py3env/bin/activate
                 . /home/deploy/.py3env/ansible/hacking/env-setup -q
-                ansible --version
-                python --version
                 cd ${env.WORKSPACE}/Java-war-dev/ansible/leon-playbook-java-war-dev1.0
                 ansible-playbook -i inventory/$deploy_env ./deploy.yml -e project=Java-war-dev -e war_path="${env.WORKSPACE}/Java-war-dev/target"              
                 set -x
