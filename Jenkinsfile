@@ -84,12 +84,10 @@ pipeline {
                 cd ${env.WORKSPACE}/Java-war-dev
                 mvn deploy
                 """
-                input("Start deploy to ${deploy_env}?")
             }
         }
-               
-        
-        stage("Ansible deployment"){
+
+        stage("Check prerequsite"){
             steps{
                 echo "INFO:Checking deployment env"
                 sh """
@@ -98,13 +96,23 @@ pipeline {
                 . /home/deploy/.py3env/ansible/hacking/env-setup -q
                 ansible --version
                 python --version
+                """
                 echo "INFO:Python and Ansibe Env is ready to go"
+                input("Start deploy to ${deploy_env}?")
+            }
+        }
+               
+        
+        stage("Ansible deployment"){
+            steps{
                 echo "INFO:Start deploy war to the destination server"
+                sh """
+                set +x
                 cd ${env.WORKSPACE}/Java-war-dev/ansible/leon-playbook-java-war-dev1.0
                 ansible-playbook -i inventory/$deploy_env ./deploy.yml -e project=Java-war-dev -e war_path="${env.WORKSPACE}/Java-war-dev/target"
                 set -x
                 """
-                echo "INFO:Anisble Deployment finished"                
+                echo "INFO:Congratulation, Anisble Deployment has finished successfully :)"                
             }
         }
 
