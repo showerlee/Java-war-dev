@@ -1,6 +1,11 @@
-# - name: Parse php version
-#   local_action: 'shell python {{ role_path }}/files/get_php_version.py {{site_url}}'
-#   register: php_version_result
+- name: Disable system firewall
+  service: name=firewalld state=stopped
+
+- name: Disable SELINX
+  selinux: state=disabled
+
+- name: Setup epel yum source for nginx and tomcat
+  yum: name=epel-release state=latest
 
 - name: Install tomcat
   yum: pkg=tomcat state=latest
@@ -10,11 +15,6 @@
 
 - name: Get current shell
   debug: msg="{{ lookup('env', 'SHELL') }}"
-
-# - debug : msg="{{php_version_result}}"
-
-# - name: Get php version
-#   debug: msg="{{php_version_result.stdout}}"
 
 - name: Backup current WAR home
   shell: 
@@ -29,5 +29,13 @@
 - name: start tomcat
   service: name=tomcat state=restarted
 
+- name: pause 5 seconds
+  pause: seconds=5
 
+- name: Run tomcat health check locally
+  shell: "sh roles/deploy/files/health_check.sh {{ site_url }} {{ port }} {{ project }}"
+  delegate_to: localhost
+  register: health_status
+
+- debug: msg="{{ health_status.stdout }}"
 

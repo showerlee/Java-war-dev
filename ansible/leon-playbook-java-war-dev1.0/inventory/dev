@@ -3,3 +3,5 @@ www.dev.example.com  ansible_user=root
 
 [Java-war-dev:vars]
 deploy_to=/var/lib/tomcat/webapps
+site_url=http://www.dev.example.com
+port=8080
