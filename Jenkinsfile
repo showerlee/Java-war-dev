@@ -40,7 +40,7 @@ pipeline {
                     def props = readProperties file: "${env.WORKSPACE}/Java-war-dev/promote.properties";
                     env['SNAP_VER'] = props['SNAP_VER'];
                     env['APPNAME'] = props['APPNAME'];
-                    currentBuild.displayName = "${env.APPNAME}-${env.SNAP_VER}"
+                    currentBuild.displayName = "${env.APPNAME}-${env.SNAP_VER}-SNAPSHOT"
                 }
                 
                 echo "[INFO] Updated ${env.APPNAME} version to ${env.SNAP_VER}"
