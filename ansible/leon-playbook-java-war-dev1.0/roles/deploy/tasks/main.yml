@@ -1,8 +1,8 @@
 # - name: Disable system firewall
 #   service: name=firewalld state=stopped
 
-- name: Disable SELINX
-  selinux: state=disabled
+# - name: Disable SELINX
+#   selinux: state=disabled
 
 - name: Setup epel yum source for nginx and tomcat
   yum: name=epel-release state=latest
