@@ -96,9 +96,10 @@ pipeline {
                 . /home/deploy/.py3env/ansible/hacking/env-setup -q
                 ansible --version
                 python --version
+                set -x
                 """
                 echo "INFO:Python and Ansibe Env is ready to go"
-                input("Start deploy to ${deploy_env}?")
+                input("Start deploying to ${deploy_env}?")
             }
         }
                
