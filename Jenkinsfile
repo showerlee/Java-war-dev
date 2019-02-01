@@ -24,7 +24,7 @@ pipeline {
             }
         }
 
-        stage("Update version"){
+        stage("VersionSet"){
             steps{
                 echo "INFO:Increased maven snapshot version"
                 sh """
