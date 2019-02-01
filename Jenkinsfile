@@ -93,7 +93,7 @@ pipeline {
                 sh """
                 set +x
                 source /home/deploy/.py3env/bin/activate
-                . /home/deploy/.py3env/ansible/hacking/env-setup -q
+                source /home/deploy/.py3env/ansible/hacking/env-setup -q
                 ansible --version
                 python --version
                 set -x
@@ -110,7 +110,7 @@ pipeline {
                 sh """
                 set +x
                 source /home/deploy/.py3env/bin/activate
-                . /home/deploy/.py3env/ansible/hacking/env-setup -q
+                source /home/deploy/.py3env/ansible/hacking/env-setup -q
                 cd ${env.WORKSPACE}/Java-war-dev/ansible/leon-playbook-java-war-dev1.0
                 ansible-playbook -i inventory/$deploy_env ./deploy.yml -e project=Java-war-dev -e war_path="${env.WORKSPACE}/Java-war-dev/target"
                 set -x
