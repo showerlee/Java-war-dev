@@ -101,8 +101,7 @@ pipeline {
                 echo "INFO:Python and Ansibe Env is ready to go"
                 input("Start deploying to ${deploy_env}?")
             }
-        }
-               
+        }      
         
         stage("Ansible deployment"){
             steps{
