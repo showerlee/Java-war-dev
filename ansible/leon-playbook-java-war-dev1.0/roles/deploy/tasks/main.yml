@@ -1,11 +1,14 @@
+
+# ==================CentOS 7 only==================
 # - name: Disable system firewall
 #   service: name=firewalld state=stopped
 
 # - name: Disable SELINX
 #   selinux: state=disabled
 
-- name: Setup epel yum source for nginx and tomcat
-  yum: name=epel-release state=latest
+# - name: Setup epel yum source for nginx and tomcat
+#   yum: name=epel-release state=latest
+# ==================CentOS 7 only==================
 
 - name: Install tomcat
   yum: pkg=tomcat state=latest
