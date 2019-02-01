@@ -6,7 +6,7 @@ The repo contains a Helllo World java application, a Jenkins pipeline script, an
 
 ####  Procedure
 ```
-Checkout source code and scripts from git repo ==> Maven compile, test and package ==> Upload war to Nexus ==> Update the package snapshot ==> Check prerequsite ==> Ansible Deployment
+Checkout source code ==> VersionSet ==> Maven compile ==> Package ==> Upload war to Nexus ==> Check prerequsite ==> Ansible Deployment
 
 ```
 
