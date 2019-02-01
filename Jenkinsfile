@@ -92,8 +92,9 @@ pipeline {
                 echo "INFO:Checking deployment env"
                 sh """
                 set +x
+                echo "Disk space:"
                 df -h
-                echo ""
+                echo "RAM space:"
                 free -m
                 set -x
                 """
