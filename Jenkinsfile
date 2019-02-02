@@ -12,6 +12,10 @@ pipeline {
             choices: 'dev\nprod',
             description: 'choose deploy environment',
             name: 'deploy_env')
+        string(
+            defaultValue: "master", 
+            description: 'Choose the branch of repository Java-war-dev', 
+            name: 'branch')
     }
     
     stages {
