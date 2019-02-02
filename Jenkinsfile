@@ -91,18 +91,20 @@ pipeline {
         stage("Env prerequsite"){
             steps{
                 echo "[INFO] Checking deployment env"
-                sh """
-                if [[ ${env.deploy_env} == dev ]]; then
-                    user=root
-                    domain=www.dev.example.com
-                    port=22
-                else
-                    user=root
-                    domain=www.example.com
-                    port=22
-
+                script {
+                    if  ( env.deploy_env == 'dev') {
+                        env['user']='root' 
+                        env['domain']='www.dev.example.com'
+                        env['port']='22'
+                    } 
+                    else{
+                        env['user']='root' 
+                        env['domain']='www.example.com'
+                        env['port']='22'
+                    }   
+                }   
                 # echo $user $domain $port
-
+                sh """
                 echo "[INFO] Checking SSH connection:"
                 sh ./script/test_ssh_conn.sh ${env.user} ${env.domain} ${env.port}
 
