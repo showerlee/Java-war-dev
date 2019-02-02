@@ -33,7 +33,7 @@ pipeline {
                 echo "" | mvn release:update-versions
                 
                 # Grab promote properties
-                sh SetPromoteProperties.sh
+                sh ./script/SetPromoteProperties.sh
                 """
                 
                 script {
@@ -93,11 +93,23 @@ pipeline {
                 echo "[INFO] Checking deployment env"
                 sh """
                 set +x
+                if [[ ${env.deploy_env} == dev ]]; then
+                    user=root
+                    domain=www.dev.example.com
+                    port=22
+                else
+                    user=root
+                    domain=www.example.com
+                    port=22
+
+                echo "[INFO] Checking SSH connection:"
+                sh ./script/test_ssh_conn.sh $user $domain $port
+
                 echo "[INFO] Checking Disk space:"
-                df -h
+                ssh -p$port $user@$domain df -h
                 echo ""
                 echo "[INFO] Checking RAM space:"
-                free -m
+                ssh -p$port $user@$domain free -m
                 set -x
                 """
                 echo "[INFO] Env is ready to go..."
