@@ -111,9 +111,9 @@ pipeline {
                 # echo ""
                 # echo "[INFO] Checking RAM space:"
                 # ssh -p$port $user@$domain free -m
-                # """
-                # echo "[INFO] Env is ready to go..."
-                # input("Start deploying to ${deploy_env}?")
+                """
+                echo "[INFO] Env is ready to go..."
+                input("Start deploying to ${deploy_env}?")
             }
         }
 
