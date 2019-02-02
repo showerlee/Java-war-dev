@@ -102,8 +102,8 @@ pipeline {
                         env['domain']='www.example.com'
                         env['port']='22'
                     }   
-                }   
-                # echo $user $domain $port
+                }
+                
                 sh """
                 echo "[INFO] Checking SSH connection:"
                 sh ./script/test_ssh_conn.sh ${env.user} ${env.domain} ${env.port}
