@@ -103,8 +103,9 @@ pipeline {
                         env['port']='22'
                     }   
                 }
-                
+
                 sh """
+                set +x
                 echo "[INFO] Checking SSH connection:"
                 sh ./script/test_ssh_conn.sh ${env.user} ${env.domain} ${env.port}
 
@@ -113,6 +114,7 @@ pipeline {
                 echo ""
                 echo "[INFO] Checking RAM space:"
                 ssh -p$port $user@$domain free -m
+                set -x
                 """
                 echo "[INFO] Env is ready to go..."
                 input("Start deploying to ${deploy_env}?")
