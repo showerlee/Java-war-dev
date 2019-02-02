@@ -92,7 +92,6 @@ pipeline {
             steps{
                 echo "[INFO] Checking deployment env"
                 sh """
-                set +x
                 if [[ ${env.deploy_env} == dev ]]; then
                     user=root
                     domain=www.dev.example.com
@@ -110,7 +109,6 @@ pipeline {
                 echo ""
                 echo "[INFO] Checking RAM space:"
                 ssh -p$port $user@$domain free -m
-                set -x
                 """
                 echo "[INFO] Env is ready to go..."
                 input("Start deploying to ${deploy_env}?")
