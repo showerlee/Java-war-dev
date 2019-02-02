@@ -101,16 +101,16 @@ pipeline {
                     domain=www.example.com
                     port=22
 
-                echo $user $domain $port
+                # echo $user $domain $port
 
-                # echo "[INFO] Checking SSH connection:"
-                # sh ./script/test_ssh_conn.sh $user $domain $port
+                echo "[INFO] Checking SSH connection:"
+                sh ./script/test_ssh_conn.sh ${env.user} ${env.domain} ${env.port}
 
-                # echo "[INFO] Checking Disk space:"
-                # ssh -p$port $user@$domain df -h
-                # echo ""
-                # echo "[INFO] Checking RAM space:"
-                # ssh -p$port $user@$domain free -m
+                echo "[INFO] Checking Disk space:"
+                ssh -p$port $user@$domain df -h
+                echo ""
+                echo "[INFO] Checking RAM space:"
+                ssh -p$port $user@$domain free -m
                 """
                 echo "[INFO] Env is ready to go..."
                 input("Start deploying to ${deploy_env}?")
