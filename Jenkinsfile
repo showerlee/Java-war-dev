@@ -19,7 +19,7 @@ pipeline {
             steps{
                 echo "[INFO] Checkout code from github."
                 dir ("${env.WORKSPACE}/Java-war-dev") {
-                    git branch: 'master', credentialsId: 'Github-credential', url: 'https://github.com/showerlee/Java-war-dev.git'
+                    git branch: "${env.branch}", credentialsId: 'Github-credential', url: 'https://github.com/showerlee/Java-war-dev.git'
                 }
             }
         }
