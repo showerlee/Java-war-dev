@@ -42,23 +42,23 @@ pipeline {
                 
                 script {
                     def props = readProperties file: "${env.WORKSPACE}/Java-war-dev/promote.properties";
-                    env['SNAP_VER'] = props['SNAP_VER'];
+                    env['VERSION'] = props['VERSION'];
                     env['APPNAME'] = props['APPNAME'];
-                    currentBuild.displayName = "${env.APPNAME} | release:${env.SNAP_VER} env:${env.deploy_env}"
+                    currentBuild.displayName = "${env.APPNAME} | SNAPSHOT:${env.VERSION} env:${env.deploy_env}"
                 }
                 
-                echo "[INFO] Updated ${env.APPNAME} version to ${env.SNAP_VER}"
+                echo "[INFO] Updated ${env.APPNAME} version to ${env.VERSION}"
                 
                 // Commit the version
                 withCredentials([usernamePassword(credentialsId: 'Github-credential', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
                     sh """
                     cd ${env.WORKSPACE}/Java-war-dev
                     git add pom.xml promote.properties
-                    git commit -m"update release to ${env.SNAP_VER}"
+                    git commit -m"update release to ${env.VERSION}"
                     git push https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@github.com/showerlee/Java-war-dev.git master
                     """
                 }
-                echo "[INFO] Committed ${env.APPNAME} release version ${env.SNAP_VER} to repo"
+                echo "[INFO] Committed ${env.APPNAME} release version ${env.VERSION} to repo"
             }
         } 
     
