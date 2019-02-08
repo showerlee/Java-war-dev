@@ -54,11 +54,11 @@ pipeline {
                     sh """
                     cd ${env.WORKSPACE}/Java-war-dev
                     git add pom.xml promote.properties
-                    git commit -m"update version to SNAPSHOT-${env.SNAP_VER}"
+                    git commit -m"update release to ${env.SNAP_VER}"
                     git push https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@github.com/showerlee/Java-war-dev.git master
                     """
                 }
-                echo "[INFO] Committed ${env.APPNAME} version ${env.SNAP_VER} to repo"
+                echo "[INFO] Committed ${env.APPNAME} release version ${env.SNAP_VER} to repo"
             }
         } 
     
