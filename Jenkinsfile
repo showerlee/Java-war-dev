@@ -100,7 +100,7 @@ pipeline {
                 script {
                     def props = readProperties file: "${env.WORKSPACE}/Java-war-dev/promote.properties";
                     env['SNAPSHOT'] = props['SNAPSHOT'];
-                    currentBuild.displayName = "${env.APPNAME} | SNAPSHOT:${env.SNAPSHOT} env:${env.deploy_env}"
+                    currentBuild.displayName = "${env.APPNAME} | SNAPSHOT:${env.SNAPSHOT} ENV:${env.deploy_env}"
                 }
                 
                 withCredentials([usernamePassword(credentialsId: 'Github-credential', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
