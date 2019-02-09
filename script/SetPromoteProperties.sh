@@ -1,11 +1,10 @@
 #!/bin/sh
 
-POM_FILE="pom.xml"
 PRO_PROPERTIES="promote.properties"
+URL="http://nexus.example.com:8081/repository/Java-war-dev/com/jenkins/demo/Java-war-dev/maven-metadata.xml"
+USER=$1
+PASS=$2
 
+TIMESTAMP=`curl -s -u $USER:$PASS | grep lastUpdated | awk -F'<' '{print $2}'|  awk -F'>' '{print $2}'`
 
-VERSION=`cat $POM_FILE |grep "version" | head -n "1" | awk -F'-' '{print \$1}'| sed 's/  <version>//g'`
-APPNAME=`cat pom.xml |grep "artifactId" | head -n "1" | awk -F'>' '{print $2}' | awk -F'<' '{print $1}'`
-
-echo "VERSION=${VERSION}" > ${PRO_PROPERTIES}
-echo "APPNAME=${APPNAME}" >> ${PRO_PROPERTIES}
+echo "TIMESTAMP=${TIMESTAMP}" > ${PRO_PROPERTIES}

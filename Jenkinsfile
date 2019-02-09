@@ -64,7 +64,6 @@ pipeline {
                     def props = readProperties file: "${env.WORKSPACE}/Java-war-dev/promote.properties";
                     env['VERSION'] = props['VERSION'];
                     env['APPNAME'] = props['APPNAME'];
-                    currentBuild.displayName = "${env.APPNAME} | SNAPSHOT:${env.VERSION} env:${env.deploy_env}"
                 }
                 
                 echo "[INFO] Updated ${env.APPNAME} version to ${env.VERSION}"
@@ -75,7 +74,7 @@ pipeline {
                     cd ${env.WORKSPACE}/Java-war-dev
                     git add pom.xml promote.properties
                     git commit -m"update release to ${env.VERSION}"
-                    git push https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@github.com/showerlee/Java-war-dev.git master
+                    git push https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@github.com/showerlee/Java-war-dev.git ${env.branch}
                     """
                 }
                 echo "[INFO] Committed ${env.APPNAME} release version ${env.VERSION} to repo"
@@ -89,6 +88,28 @@ pipeline {
                 cd ${env.WORKSPACE}/Java-war-dev
                 mvn deploy
                 """
+
+                withCredentials([usernamePassword(credentialsId: 'Nexus-credential', usernameVariable: 'Nexus_USERNAME', passwordVariable: 'Nexus_PASSWORD')]) {
+                sh """
+                echo "[INFO] Get Maven Timestamp"
+                sh ./script/SetTimestamp.sh ${env.Nexus_USERNAME} ${env.Nexus_PASSWORD}
+                """
+                }
+
+                script {
+                    def props = readProperties file: "${env.WORKSPACE}/Java-war-dev/promote.properties";
+                    env['TIMESTAMP'] = props['TIMESTAMP'];
+                    currentBuild.displayName = "${env.APPNAME} | SNAPSHOT:${env.VERSION}-${env.TIMESTAMP} env:${env.deploy_env}"
+                }
+                
+                withCredentials([usernamePassword(credentialsId: 'Github-credential', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                    sh """
+                    cd ${env.WORKSPACE}/Java-war-dev
+                    git promote.properties
+                    git commit -m"update timestamp to ${env.TIMESTAMP}"
+                    git push https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@github.com/showerlee/Java-war-dev.git ${env.branch}
+                    """
+                }
             }
         }
 
