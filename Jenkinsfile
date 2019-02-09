@@ -105,7 +105,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'Github-credential', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
                     sh """
                     cd ${env.WORKSPACE}/Java-war-dev
-                    git promote.properties
+                    git add promote.properties
                     git commit -m"update timestamp to ${env.TIMESTAMP}"
                     git push https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@github.com/showerlee/Java-war-dev.git ${env.branch}
                     """
