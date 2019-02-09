@@ -91,6 +91,7 @@ pipeline {
 
                 withCredentials([usernamePassword(credentialsId: 'Nexus-credential', usernameVariable: 'Nexus_USERNAME', passwordVariable: 'Nexus_PASSWORD')]) {
                 sh """
+                cd ${env.WORKSPACE}/Java-war-dev
                 echo "[INFO] Get Maven Timestamp"
                 sh ./script/SetTimestamp.sh ${env.Nexus_USERNAME} ${env.Nexus_PASSWORD}
                 """

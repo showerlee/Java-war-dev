@@ -7,5 +7,5 @@ PASS=$2
 
 TIMESTAMP=`curl -s -u $USER:$PASS $URL | grep lastUpdated | awk -F'<' '{print $2}'|  awk -F'>' '{print $2}'`
 
-echo "TIMESTAMP=${TIMESTAMP}" > ${PRO_PROPERTIES}
+echo "TIMESTAMP=${TIMESTAMP}" >> ${PRO_PROPERTIES}
 
