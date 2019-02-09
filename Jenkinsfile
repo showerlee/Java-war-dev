@@ -26,6 +26,26 @@ pipeline {
                     git branch: "${env.branch}", credentialsId: 'Github-credential', url: 'https://github.com/showerlee/Java-war-dev.git'
                 }
             }
+        } 
+    
+        stage("Mvn compile"){
+            steps{
+                sh """
+                echo "[INFO] Maven compilation"
+                cd ${env.WORKSPACE}/Java-war-dev
+                mvn compile
+                """
+            }
+        }
+        
+        stage("Package"){
+            steps{
+                sh """
+                echo "[INFO] Maven package"
+                cd ${env.WORKSPACE}/Java-war-dev
+                mvn package
+                """
+            }
         }
 
         stage("VersionSet"){
@@ -59,26 +79,6 @@ pipeline {
                     """
                 }
                 echo "[INFO] Committed ${env.APPNAME} release version ${env.VERSION} to repo"
-            }
-        } 
-    
-        stage("Mvn compile"){
-            steps{
-                sh """
-                echo "[INFO] Maven compilation"
-                cd ${env.WORKSPACE}/Java-war-dev
-                mvn compile
-                """
-            }
-        }
-        
-        stage("Package"){
-            steps{
-                sh """
-                echo "[INFO] Maven package"
-                cd ${env.WORKSPACE}/Java-war-dev
-                mvn package
-                """
             }
         }
     
