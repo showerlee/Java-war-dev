@@ -92,22 +92,22 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'Nexus-credential', usernameVariable: 'Nexus_USERNAME', passwordVariable: 'Nexus_PASSWORD')]) {
                 sh """
                 cd ${env.WORKSPACE}/Java-war-dev
-                echo "[INFO] Get Maven Timestamp"
-                sh ./script/SetTimestamp.sh ${env.Nexus_USERNAME} ${env.Nexus_PASSWORD}
+                echo "[INFO] Get Maven SNAPSHOT"
+                sh ./script/SetSnapshot.sh ${env.Nexus_USERNAME} ${env.Nexus_PASSWORD} ${env.VERSION}
                 """
                 }
 
                 script {
                     def props = readProperties file: "${env.WORKSPACE}/Java-war-dev/promote.properties";
-                    env['TIMESTAMP'] = props['TIMESTAMP'];
-                    currentBuild.displayName = "${env.APPNAME} | SNAPSHOT:${env.VERSION}-${env.TIMESTAMP} env:${env.deploy_env}"
+                    env['SNAPSHOT'] = props['SNAPSHOT'];
+                    currentBuild.displayName = "${env.APPNAME} | SNAPSHOT:${env.SNAPSHOT} env:${env.deploy_env}"
                 }
                 
                 withCredentials([usernamePassword(credentialsId: 'Github-credential', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
                     sh """
                     cd ${env.WORKSPACE}/Java-war-dev
                     git add promote.properties
-                    git commit -m"update timestamp to ${env.TIMESTAMP}"
+                    git commit -m"update SNAPSHOT to ${env.SNAPSHOT}"
                     git push https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@github.com/showerlee/Java-war-dev.git ${env.branch}
                     """
                 }
