@@ -2,6 +2,8 @@
 
 pipeline {
     agent{node {label 'master'}}
+
+    options { timestamps () }
     
     environment {
         PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/data/apache-maven-3.6.0/bin"
