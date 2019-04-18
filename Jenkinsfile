@@ -189,6 +189,7 @@ pipeline {
                 set +x
                 sh ./script/health_check.sh ${env.site_url} ${env.port} ${env.project}
                 set -x
+                echo "[INFO] Congratulation, Health check is accomplished, please enjoy yourself... :)"
                 """
             }
         }
