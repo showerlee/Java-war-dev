@@ -22,4 +22,6 @@ done
 
 if [[ $status == ok ]]; then
   echo "[INFO] ssh connection available, it is good to go."
+else
+  echo "[INFO] ssh connection failed, please check."
 fi

@@ -170,6 +170,29 @@ pipeline {
             }
         }
 
+        stage("Health Check"){
+            steps{
+                echo "[INFO] health check for destination server"
+                script {
+                    if  ( env.deploy_env == 'dev') {
+                        env['project']='Java-war-dev' 
+                        env['site_url']='http://www.dev.example.com'
+                        env['port']='8080'
+                    } 
+                    else{
+                        env['project']='Java-war-dev' 
+                        env['site_url']='http://www.example.com'
+                        env['port']='8080'
+                    }   
+                }
+                sh """
+                set +x
+                sh ./script/health_check.sh ${env.site_url} ${env.port} ${env.project}
+                set -x
+                """
+            }
+        }
+
     }
 
 }
