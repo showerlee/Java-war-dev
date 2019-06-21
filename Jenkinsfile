@@ -73,12 +73,12 @@ pipeline {
                 // Commit the version
                 withCredentials([usernamePassword(credentialsId: 'Github-credential', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
                     sh """
+                    alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1])"'
+                    GIT_PASS_ENCODE=`urlencode ${env.GIT_PASSWORD}`
                     cd ${env.WORKSPACE}/Java-war-dev
                     git add pom.xml promote.properties
                     git commit -m"update release to ${env.VERSION}"
-                    echo "${env.GIT_USERNAME}"  >> test.txt
-                    echo "${env.GIT_PASSWORD}"  >> test.txt
-                    git push https://"${env.GIT_USERNAME}":"${env.GIT_PASSWORD}"@github.com/showerlee/Java-war-dev.git ${env.branch}
+                    git push https://${env.GIT_USERNAME}:${GIT_PASS_ENCODE}@github.com/showerlee/Java-war-dev.git ${env.branch}
                     """
                 }
                 echo "[INFO] Committed ${env.APPNAME} release version ${env.VERSION} to repo"
