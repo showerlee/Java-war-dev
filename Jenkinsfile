@@ -76,6 +76,8 @@ pipeline {
                     cd ${env.WORKSPACE}/Java-war-dev
                     git add pom.xml promote.properties
                     git commit -m"update release to ${env.VERSION}"
+                    echo "${env.GIT_USERNAME}" 
+                    echo "${env.GIT_PASSWORD}"
                     git push https://"${env.GIT_USERNAME}":"${env.GIT_PASSWORD}"@github.com/showerlee/Java-war-dev.git ${env.branch}
                     """
                 }
