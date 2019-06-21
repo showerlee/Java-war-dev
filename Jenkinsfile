@@ -75,11 +75,10 @@ pipeline {
                     sh """
                     set +x
                     alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1])"'
-                    GIT_PASS_ENCODE=`urlencode ${env.GIT_PASSWORD}`
                     cd ${env.WORKSPACE}/Java-war-dev
                     git add pom.xml promote.properties
                     git commit -m"update release to ${env.VERSION}"
-                    git push https://${env.GIT_USERNAME}:$GIT_PASS_ENCODE@github.com/showerlee/Java-war-dev.git ${env.branch}
+                    git push https://${env.GIT_USERNAME}:`urlencode ${env.GIT_PASSWORD}`@github.com/showerlee/Java-war-dev.git ${env.branch}
                     set -x
                     """
                 }
