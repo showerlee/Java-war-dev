@@ -110,7 +110,7 @@ pipeline {
                     cd ${env.WORKSPACE}/Java-war-dev
                     git add promote.properties
                     git commit -m"update SNAPSHOT to ${env.SNAPSHOT}"
-                    git push https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@github.com/showerlee/Java-war-dev.git ${env.branch}
+                    git push https://"${env.GIT_USERNAME}":"${env.GIT_PASSWORD}"@github.com/showerlee/Java-war-dev.git ${env.branch}
                     """
                 }
             }
