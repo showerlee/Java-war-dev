@@ -73,13 +73,11 @@ pipeline {
                 // Commit the version
                 withCredentials([usernamePassword(credentialsId: 'Github-credential', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
                     sh """
-                    set +x
                     alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1])"'
                     cd ${env.WORKSPACE}/Java-war-dev
                     git add pom.xml promote.properties
                     git commit -m"update release to ${env.VERSION}"
                     git push https://${env.GIT_USERNAME}:`urlencode ${env.GIT_PASSWORD}`@github.com/showerlee/Java-war-dev.git ${env.branch}
-                    set -x
                     """
                 }
                 echo "[INFO] Committed ${env.APPNAME} release version ${env.VERSION} to repo"
@@ -110,10 +108,11 @@ pipeline {
                 
                 withCredentials([usernamePassword(credentialsId: 'Github-credential', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
                     sh """
+                    alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1])"'
                     cd ${env.WORKSPACE}/Java-war-dev
                     git add promote.properties
                     git commit -m"update SNAPSHOT to ${env.SNAPSHOT}"
-                    git push https://"${env.GIT_USERNAME}":"${env.GIT_PASSWORD}"@github.com/showerlee/Java-war-dev.git ${env.branch}
+                    git push https://${env.GIT_USERNAME}:`urlencode ${env.GIT_PASSWORD}`@github.com/showerlee/Java-war-dev.git ${env.branch}
                     """
                 }
             }
