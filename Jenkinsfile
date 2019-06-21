@@ -77,7 +77,9 @@ pipeline {
                     cd ${env.WORKSPACE}/Java-war-dev
                     git add pom.xml promote.properties
                     git commit -m"update release to ${env.VERSION}"
+                    set +x
                     git push https://${env.GIT_USERNAME}:`urlencode ${env.GIT_PASSWORD}`@github.com/showerlee/Java-war-dev.git ${env.branch}
+                    set -x
                     """
                 }
                 echo "[INFO] Committed ${env.APPNAME} release version ${env.VERSION} to repo"
@@ -112,7 +114,9 @@ pipeline {
                     cd ${env.WORKSPACE}/Java-war-dev
                     git add promote.properties
                     git commit -m"update SNAPSHOT to ${env.SNAPSHOT}"
+                    set +x
                     git push https://${env.GIT_USERNAME}:`urlencode ${env.GIT_PASSWORD}`@github.com/showerlee/Java-war-dev.git ${env.branch}
+                    set -x
                     """
                 }
             }
