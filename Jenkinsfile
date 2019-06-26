@@ -111,7 +111,7 @@ pipeline {
                     // Find built artifact under target folder
                     filesByGlob = findFiles(glob: "Java-war-dev/target/*.${pom.packaging}");
                     // Print some info from the artifact found
-                    echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
+                    echo "[INFO] Name: ${filesByGlob[0].name}, Path: ${filesByGlob[0].path}, Directory: ${filesByGlob[0].directory}, Length: ${filesByGlob[0].length}, lastModified: ${filesByGlob[0].lastModified}"
                     // Extract the path from the File found
                     artifactPath = filesByGlob[0].path;
                     // Assign to a boolean response verifying If the artifact name exists
