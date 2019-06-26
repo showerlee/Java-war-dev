@@ -104,11 +104,11 @@ pipeline {
                 # cd ${env.WORKSPACE}/Java-war-dev
                 # mvn deploy
                 """
-                
+
                 echo "[INFO] Upload built war file to Nexus via nexusArtifactUploader"
                 script {
                     // Read POM xml file using 'readMavenPom' step , this step 'readMavenPom' is included in: https://plugins.jenkins.io/pipeline-utility-steps
-                    pom = readMavenPom file: "pom.xml";
+                    pom = readMavenPom file: "Java-war-dev/pom.xml";
                     // Find built artifact under target folder
                     filesByGlob = findFiles(glob: "Java-war-dev/target/*.${pom.packaging}");
                     // Print some info from the artifact found
