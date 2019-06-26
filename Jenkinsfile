@@ -100,18 +100,19 @@ pipeline {
         stage("Publish war to Nexus"){
             steps{
                 sh """
-                # echo "[INFO] Upload built war file to Nexus"
+                # echo "[INFO] Upload built war file to Nexus via maven"
                 # cd ${env.WORKSPACE}/Java-war-dev
                 # mvn deploy
                 """
-                echo "[INFO] Upload built war file to Nexus"
+                
+                echo "[INFO] Upload built war file to Nexus via nexusArtifactUploader"
                 script {
                     // Read POM xml file using 'readMavenPom' step , this step 'readMavenPom' is included in: https://plugins.jenkins.io/pipeline-utility-steps
                     pom = readMavenPom file: "pom.xml";
                     // Find built artifact under target folder
                     filesByGlob = findFiles(glob: "Java-war-dev/target/*.${pom.packaging}");
                     // Print some info from the artifact found
-                    echo "[INFO] Name: ${filesByGlob[0].name}, Path: ${filesByGlob[0].path}, Directory: ${filesByGlob[0].directory}, Length: ${filesByGlob[0].length}, lastModified: ${filesByGlob[0].lastModified}"
+                    echo "[INFO] Name: ${filesByGlob[0].name}, Directory: ${filesByGlob[0].directory}, Length: ${filesByGlob[0].length}, lastModified: ${filesByGlob[0].lastModified}"
                     // Extract the path from the File found
                     artifactPath = filesByGlob[0].path;
                     // Assign to a boolean response verifying If the artifact name exists
