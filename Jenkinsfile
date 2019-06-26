@@ -45,7 +45,7 @@ pipeline {
                 sh """
                 echo "[INFO] Maven package"
                 cd ${env.WORKSPACE}/Java-war-dev
-                mvn package
+                mvn package -DskipTests=true
                 """
             }
         }
