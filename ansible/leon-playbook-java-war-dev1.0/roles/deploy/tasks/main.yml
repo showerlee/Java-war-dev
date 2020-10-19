@@ -23,7 +23,7 @@
   shell: 
     'cp -a {{deploy_to}} {{backup_to}}'
 
-- name: "Copy source {{war_path}}/{{project}}.war to destination {{deploy_to}}/{{project}}.war when dev env" 
+- name: "Copy source {{war_path}}/{{project}}.war to destination {{deploy_to}}/{{project}}.war"
   copy:
     src: "{{war_path}}/{{project}}.war"
     dest: "{{deploy_to}}/{{project}}.war"

@@ -22,7 +22,7 @@ pipeline {
     
     parameters {
         choice(
-            choices: 'dev\nprod',
+            choices: 'test\nprod',
             description: 'choose deploy environment',
             name: 'deploy_env')
         string(
@@ -177,9 +177,9 @@ pipeline {
             steps{
                 echo "[INFO] Checking deployment env"
                 script {
-                    if  ( env.deploy_env == 'dev') {
+                    if  ( env.deploy_env == 'test') {
                         env['user']='root' 
-                        env['domain']='www.dev.example.com'
+                        env['domain']='www.test.example.com'
                         env['port']='22'
                     } 
                     else{
@@ -231,9 +231,9 @@ pipeline {
             steps{
                 echo "[INFO] health check for destination server"
                 script {
-                    if  ( env.deploy_env == 'dev') {
+                    if  ( env.deploy_env == 'test') {
                         env['project']='Java-war-dev' 
-                        env['site_url']='http://www.dev.example.com'
+                        env['site_url']='http://www.test.example.com'
                         env['port']='8080'
                     } 
                     else{
